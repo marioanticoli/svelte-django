@@ -1,0 +1,38 @@
+version: "3.8"
+
+x-common-variables: &db-settings
+  POSTGRES_USER: myuser
+  POSTGRES_DB: mydb
+  POSTGRES_PASSWORD: mysecretpassword
+  POSTGRES_HOST: db # Hostname of Postgres container.
+  POSTGRES_PORT: 5432
+
+services:
+  db:
+    image: postgres:alpine
+    restart: unless-stopped
+    environment: *db-settings
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pgdata:/var/lib/posgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  idisclose:
+    build:
+      context: .
+    restart: unless-stopped
+    environment: *db-settings
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./iDisclose:/iDisclose
+    command: daphne -b 0.0.0.0 -p 8000 iDisclose.asgi:application
+    depends_on:
+      db:
+        condition: service_healthy
+volumes:
+  pgdata:
