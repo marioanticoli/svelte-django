@@ -1,9 +1,11 @@
+# Simple Django+Svelte kit+Tacit CSS skeleton
+
 ## 1. Prerequisites
 Please make sure **docker** and **docker-compose** are available on your machine.
 
 ## 2. Obtain the source code
 
-`git clone https://github.com/marioanticoli/cm3070.git`
+`git clone git@github.com:marioanticoli/svelte-django.git`
 
 Alternatively extract the compressed file to any directory and execute the commands from the project root.
 
