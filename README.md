@@ -25,10 +25,10 @@ Alternatively extract the compressed file to any directory and execute the comma
 `cd frontend && npm run build`
 
 #### Migrations
-`docker-compose run idisclose python manage.py migrate`
+`docker-compose run backend python manage.py migrate`
 
 #### Static Files
-`docker-compose run idisclose python manage.py collectstatic`
+`docker-compose run backend python manage.py collectstatic`
 
 #### Services
 `docker-compose up`
