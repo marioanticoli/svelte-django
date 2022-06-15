@@ -28,7 +28,7 @@ services:
     environment:
       <<: *db-settings
       POSTGRES_HOST: db
-      SECRET_KEY: ${SECRET_KEY}
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
     ports:
       - "8000:8000"
     volumes:
