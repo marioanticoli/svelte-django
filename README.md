@@ -11,19 +11,32 @@ Alternatively extract the compressed file to any directory and execute the comma
 
 ## 3. Run
 
-### Migrations
+### Development
+
+#### Run FE
+`npm run dev --`
+
+#### Run BE
+`python manage.py runserver`
+
+### Production
+
+#### Build FE
+`cd frontend && npm run build`
+
+#### Migrations
 `docker-compose run idisclose python manage.py migrate`
 
-### Static Files
+#### Static Files
 `docker-compose run idisclose python manage.py collectstatic`
 
-### Services
+#### Services
 `docker-compose up`
 
-### Other commands
+#### Other commands
 
-#### Stop
+##### Stop
 `docker-compose stop`
 
-#### Start (after first time)
+##### Start (after first time)
 `docker-compose start`
