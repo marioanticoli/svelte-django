@@ -1,17 +1,17 @@
 version: "3.8"
 
 x-common-variables: &db-settings
-  POSTGRES_USER: myuser
-  POSTGRES_DB: mydb
-  POSTGRES_PASSWORD: mysecretpassword
-  POSTGRES_HOST: db # Hostname of Postgres container.
-  POSTGRES_PORT: 5432
+  POSTGRES_USER: ${POSTGRES_USER}
+  POSTGRES_DB: ${POSTGRES_DB}
+  POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  POSTGRES_PORT: ${POSTGRES_PORT}
 
 services:
   db:
     image: postgres:alpine
     restart: unless-stopped
-    environment: *db-settings
+    environment:
+      <<: *db-settings
     ports:
       - "5432:5432"
     volumes:
@@ -21,16 +21,19 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-  idisclose:
+  backend:
     build:
       context: .
     restart: unless-stopped
-    environment: *db-settings
+    environment:
+      <<: *db-settings
+      POSTGRES_HOST: db
+      SECRET_KEY: ${SECRET_KEY}
     ports:
       - "8000:8000"
     volumes:
-      - ./iDisclose:/iDisclose
-    command: daphne -b 0.0.0.0 -p 8000 iDisclose.asgi:application
+      - ./backend:/backend
+    command: daphne -b 0.0.0.0 -p 8000 backend.asgi:application
     depends_on:
       db:
         condition: service_healthy

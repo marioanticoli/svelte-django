@@ -11,9 +11,9 @@ COPY ./requirements.txt /tmp
 #Create directory to mount volume with source code
 #add deps in Alpine
 #let pip install required packages
-RUN mkdir /iDisclose \
+RUN mkdir /backend \
     && apk add --update --no-cache --virtual .tmp-build-deps \
     gcc libc-dev libffi-dev \
     && pip install --upgrade pip && pip install -r /tmp/requirements.txt
 
-WORKDIR /iDisclose
+WORKDIR /backend
